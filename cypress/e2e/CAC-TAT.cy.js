@@ -91,15 +91,112 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success').should('be.visible')
 
   })
-  it.only('utlizando cy_contains para identificar elementos', function () {
+  it('utlizando cy_contains para identificar elementos', function () {
     cy.get('#firstName').type(this.user.firstName)
     cy.get('#lastName').type(this.user.lastName)
     cy.get('#email').type(this.user.email)
     cy.get('#phone-checkbox').click()
     cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
-    cy.contains('button', 'Enviar').click()
+    cy.contains('button', 'Enviar').click() // cy contais localiza o botão do tipo enviar
 
     cy.get('.error').should('be.visible')
   })
 
+  it('seleciona um produto (YouTube) por seu texto', function () {
+    cy.get('#firstName').type(this.user.firstName)
+    cy.get('#lastName').type(this.user.lastName)
+    cy.get('#email').type(this.user.email)
+    cy.get('#phone').type(this.user.phone)
+    cy.get('#product').select(['YouTube'])
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
+
+    cy.get('#product')
+      .invoke('val')
+      .should('eq', 'youtube')
+
+  })
+  it('seleciona um produto (Mentoria) por seu valor (value)', function () {
+    cy.get('#firstName').type(this.user.firstName)
+    cy.get('#lastName').type(this.user.lastName)
+    cy.get('#email').type(this.user.email)
+    cy.get('#phone').type(this.user.phone)
+    cy.get('#product').select('mentoria')
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
+
+    cy.get('#product')
+      .should('have.value', 'mentoria')
+  })
+  it('seleciona um produto (Blog) por seu índice', function () {
+    cy.get('#firstName').type(this.user.firstName)
+    cy.get('#lastName').type(this.user.lastName)
+    cy.get('#email').type(this.user.email)
+    cy.get('#phone').type(this.user.phone)
+    cy.get('#product').select(1)
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
+
+    cy.get('#product')
+      .should('have.value', 'blog')
+  })
+  it('marca o tipo de atendimento "Feedback"', function () {
+    cy.get('#firstName').type(this.user.firstName)
+    cy.get('#lastName').type(this.user.lastName)
+    cy.get('#email').type(this.user.email)
+    cy.get('#phone').type(this.user.phone)
+    cy.get('#product').select(1)
+    cy.get('input[type="radio"][value="feedback"]').check('feedback')
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
+
+    cy.get('input[type="radio"][value="feedback"]')
+      .should('have.value', 'feedback')
+  })
+  it('marca cada tipo de atendimento', () => {
+    cy.get('input[type="radio"][value="ajuda"]')
+      .check()
+      .should('be.checked')
+
+    cy.get('input[type="radio"][value="elogio"]')
+      .check()
+      .should('be.checked')
+
+    cy.get('input[type="radio"][value="feedback"]')
+      .check()
+      .should('be.checked')
+  })
+  it('marca cada tipo de atendimento radio - utiliza each e wrap', () => {
+    cy.get('input[type="radio"]')
+      .each(typeOfService => {
+        cy.wrap(typeOfService)
+          .check()
+          .should('be.checked')
+      })
+  })
+  it('marca ambos checkboxes, depois desmarca todos', () => {
+    cy.get('input[type="checkbox"]')
+      .each(typeOfService => {
+        cy.wrap(typeOfService)
+          .check()
+          .should('be.checked')
+          .uncheck()
+          .should('not.be.checked')
+      })
+  })
+  it.only('marca ambos checkboxes, depois desmarca o ultimo', () => {
+    cy.get('#check > [name="email"]')
+      .check()
+
+    cy.get('#check > [name="phone"]')
+      .check()
+      .should('be.checked')
+      .uncheck()
+
+    cy.get('#check > [name="email"]')
+      .should('be.checked')
+
+    cy.get('#check > [name="phone"]')
+      .should('not.be.checked')
+  })
 })
