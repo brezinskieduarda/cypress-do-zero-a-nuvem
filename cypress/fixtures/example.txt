@@ -1,0 +1,41 @@
+5 passos para iniciar um projeto em Cypress:
+
+Pré-requisitos:
+
+- [git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en/) 
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+Observações:
+
+Ao instalar o Node.js o NPM é instalado junto
+Para verificar as versões do git, Node.js e NPM instaladas em seu computador, execute o comando `git --version && node --version && npm --version` no seu terminal de linha de comando.
+
+
+1 - Criar projeto Cypress
+
+- Entrar no VSCode
+- Clicar em File > Open Folder
+- Criar uma pasta para seu projeto Cypress
+- No VSCode ir no meu Terminal > New terminal
+- Digitar: npm init -y
+-- nesse momento ele cria o package JSON
+
+2 - Instalar Cypress
+- No VSCode ir no meu Terminal > New terminal
+- npm install cypress
+
+3 - Iniciar Cypress para configurar
+
+- Digitar: npx cypress open
+-- nesse momento é criado um projeto CYPRESS
+
+4 - Executar o Cypress no Visual Studio Code
+
+No terminal do Visual Studio Code, navegue até o diretório do seu projeto Cypress. 
+No menu Vá em Terminal > New Terminal > npx cypress open
+O Cypress Test Runner será aberto no Visual Studio Code.
+
+Na primeira tela terá a opção de escolher em qual Browser você quer executar os testes, escolha um browser e clique em: Start E2E Testing in Crhome
+Na próxima tela será apresentado todos os testes
+Clique em um dos testes e ele será executado

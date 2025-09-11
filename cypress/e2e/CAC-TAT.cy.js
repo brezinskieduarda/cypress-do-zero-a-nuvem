@@ -46,7 +46,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#firstName').type(this.user.firstName)
     cy.get('#lastName').type(this.user.lastName)
     cy.get('#email').type(this.user.email)
-    cy.get('#phone-checkbox').click()
+    cy.get('#phone-checkbox').check()
     cy.get('#open-text-area').type(this.user.longText, { delay: 0 })
     cy.get('button[type="submit"]').click()
 
@@ -184,7 +184,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
           .should('not.be.checked')
       })
   })
-  it.only('marca ambos checkboxes, depois desmarca o ultimo', () => {
+  it('marca ambos checkboxes, depois desmarca o ultimo', () => {
     cy.get('#check > [name="email"]')
       .check()
 
@@ -199,4 +199,40 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#check > [name="phone"]')
       .should('not.be.checked')
   })
+  it('marcar dois checks ao mesmo tempo', () => {
+    cy.get('input[type="checkbox"]')
+      .check()
+      .should('be.checked')
+      .last()
+      .uncheck()
+      .should('not.be.checked')
+  })
+  it('seleciona um arquivo da pasta fixtures', () => {
+    cy.get('input[type="File"]').selectFile('cypress/fixtures/example.txt')
+  })
+  it('seleciona um arquivo simulando um drag-and-drop', () => {
+    cy.get('input[type="File"]').selectFile('cypress/fixtures/example.txt', { action: 'drag-drop' })
+  })
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+    cy.fixture('example.txt').as('myexample')
+    cy.get('input[type="File"]').selectFile('@myexample')
+  })
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+    cy.get('a[href="privacy.html"]')
+      .should('have.attr', 'target', '_blank')
+  })
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+    cy.get('a[href="privacy.html"]')
+      .invoke('removeAttr', 'target')
+      .click()
+    cy.url().should('include', 'privacy.html')
+  })
+  it('testa a página da política de privacidade de forma independente', () => {
+    cy.visit('./src/privacy.html')
+
+    cy.contains('CAC TAT - Política de Privacidade')
+      .should('be.visible')
+
+  })
+
 })
