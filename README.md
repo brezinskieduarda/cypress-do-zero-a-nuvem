@@ -1,6 +1,6 @@
 # cy-data-test
 
-Sample project to demonstrate a `cy.dataTest` Cypress custom command.
+Sample project to demonstrate a complet test in `CAT-TAT`.
 
 ## Pre-requirements
 
